@@ -6,6 +6,7 @@ import dev.discordmk.quark.DiscordBot;
 import dev.discordmk.quark.blocks.IBlock;
 import dev.discordmk.quark.blocks.statics.IStaticBlock;
 import dev.discordmk.quark.reader.BlockReaderMK;
+import dev.discordmk.quark.writer.BlockWriterMK;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -40,12 +41,32 @@ public class MessageReceived implements IWorkspace {
             }
         };
     }
-    
+
+    @Override
+    public String getType() {
+        return "message_received";
+    }
+
     public static IWorkspace readJson(JsonObject workspaceJson) {
         JsonArray blocksJson = workspaceJson.get("blocks").getAsJsonArray();
+
+        // TODO: Implement actions
         
         List<IBlock> blocks = BlockReaderMK.readBlocks(blocksJson);
         List<IStaticBlock> staticBlocks = BlockReaderMK.readStaticBlocks(blocksJson);
         return new MessageReceived(blocks, staticBlocks);
+    }
+
+    public static JsonObject writeJson(MessageReceived workspace) {
+        JsonObject workspaceJson = new JsonObject();
+
+        workspaceJson.addProperty("type", workspace.getType());
+        
+        // TODO: Implement actions
+        
+        JsonArray blocksJson = BlockWriterMK.writeBlocks(workspace.blocks, workspace.staticBlocks);
+        
+        workspaceJson.add("blocks", blocksJson);
+        return workspaceJson;
     }
 }

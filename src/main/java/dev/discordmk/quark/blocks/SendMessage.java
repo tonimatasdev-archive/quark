@@ -25,7 +25,12 @@ public class SendMessage extends Block {
         
         return Map.of();
     }
-    
+
+    @Override
+    public String getType() {
+        return "send_message";
+    }
+
     public static SendMessage readJson(JsonObject blockJson) {
         String id = blockJson.get("id").getAsString();
         JsonArray jsonVariables = blockJson.get("variables").getAsJsonArray();
@@ -37,5 +42,24 @@ public class SendMessage extends Block {
         }
         
         return new SendMessage(id, variables);
+    }
+    
+    public static JsonObject writeJson(SendMessage block) {
+        JsonObject blockJson = new JsonObject();
+        
+        blockJson.addProperty("id", block.id);
+        blockJson.addProperty("type", block.getType());
+
+        // TODO: Implement actions
+        
+        JsonArray variablesJson = new JsonArray();
+        
+        for (String variable : block.variables) {
+            variablesJson.add(variable);
+        }
+        
+        blockJson.add("variables", variablesJson);
+        
+        return blockJson;
     }
 }

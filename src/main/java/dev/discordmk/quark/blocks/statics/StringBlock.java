@@ -3,7 +3,7 @@ package dev.discordmk.quark.blocks.statics;
 import java.util.Map;
 
 public class StringBlock extends StaticBlock {
-    protected String value;
+    public String value;
     
     public StringBlock(String blockId, String value) {
         super(blockId);
@@ -13,5 +13,10 @@ public class StringBlock extends StaticBlock {
     @Override
     public Map<String, Object> execute() {
         return Map.of(blockId + "_0", value);
+    }
+
+    @Override
+    public String getType() {
+        return "string";
     }
 }

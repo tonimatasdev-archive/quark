@@ -6,4 +6,9 @@ public abstract class StaticBlock implements IStaticBlock {
     public StaticBlock(String blockId) {
         this.blockId = blockId;
     }
+
+    @Override
+    public String getId() {
+        return blockId;
+    }
 }

@@ -6,4 +6,6 @@ import java.util.Map;
 
 public interface IBlock {
     Map<String, Object> execute(DiscordBot discordBot, Map<String, Object> values);
+    
+    String getType();
 }

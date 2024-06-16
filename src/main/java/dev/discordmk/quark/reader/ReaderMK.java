@@ -39,16 +39,16 @@ public class ReaderMK {
         
         for (JsonElement jsonElement : workspacesJson) {
             JsonObject workspaceJson = jsonElement.getAsJsonObject();
-            workspaces.add(readWorkspace(token, workspaceJson));
+            workspaces.add(readWorkspace(workspaceJson));
         }
         
         return new DiscordBot(token, name, workspaces);
     }
     
-    public static IWorkspace readWorkspace(String token, JsonObject workspaceJson) {
+    public static IWorkspace readWorkspace(JsonObject workspaceJson) {
         String workspaceType = workspaceJson.get("type").getAsString();
         return switch (workspaceType) {
-            case "message_received" -> MessageReceived.readJson(token, workspaceJson);
+            case "message_received" -> MessageReceived.readJson(workspaceJson);
             default -> sendErrorReturningNull(workspaceType);
         };
     }

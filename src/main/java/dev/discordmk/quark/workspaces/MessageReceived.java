@@ -15,12 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 public class MessageReceived implements IWorkspace {
-    protected String botToken;
     protected List<IBlock> blocks;
     protected List<IStaticBlock> staticBlocks;
     
-    public MessageReceived(String botToken, List<IBlock> blocks, List<IStaticBlock> staticBlocks) {
-        this.botToken = botToken;
+    public MessageReceived(List<IBlock> blocks, List<IStaticBlock> staticBlocks) {
         this.blocks = blocks;
         this.staticBlocks = staticBlocks;
     }
@@ -43,11 +41,11 @@ public class MessageReceived implements IWorkspace {
         };
     }
     
-    public static IWorkspace readJson(String botToken, JsonObject workspaceJson) {
+    public static IWorkspace readJson(JsonObject workspaceJson) {
         JsonArray blocksJson = workspaceJson.get("blocks").getAsJsonArray();
         
         List<IBlock> blocks = BlockReaderMK.readBlocks(blocksJson);
         List<IStaticBlock> staticBlocks = BlockReaderMK.readStaticBlocks(blocksJson);
-        return new MessageReceived(botToken, blocks, staticBlocks);
+        return new MessageReceived(blocks, staticBlocks);
     }
 }

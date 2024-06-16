@@ -1,18 +1,28 @@
 plugins {
-    id("java")
+    java
+    `maven-publish`
 }
 
+val projectVersion: String by extra
+val jdaVersion: String by extra
+val gsonVersion: String by extra
+
 group = "dev.discordmk"
-version = "1.0-SNAPSHOT"
+version = projectVersion
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    
+    implementation("net.dv8tion:JDA:$jdaVersion")
+    implementation("com.google.code.gson:gson:$gsonVersion")
 }
 
-tasks.test {
-    useJUnitPlatform()
+publishing {
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            artifact(tasks.jar)
+        }
+    }
 }
